@@ -1,27 +1,14 @@
-pipeline {
-  agent {
-    node {
-      label 'master'
+ node {
+       stage('Preparation') { // for display purposes
+          // Get some code from a GitHub repository
+          git 'https://github.com/RomanDelim/maven.git'
+          // Get the Maven tool.
+          // ** NOTE: This 'M3' Maven tool must be configured
+          // **       in the global configuration.           
+          mvnHome = tool 'M3'
+       }
+       stage('Build') {
+          // Run the maven build
+          sh "mvn package"
+          }
     }
-  }
-  environment {
-    TestVariable = "testValue"
-  }
-  stages {
-    stage('Show env') {
-      steps {
-        sh "printenv"
-      }
-    }
-    stage('Build and Publish Image') {
-      steps {
-        sh "echo $TestVariable"
-      }
-    }
-  }
-  post {
-    failure {
-      echo "Build failed"
-    }
-  }
-}
