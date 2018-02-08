@@ -6,12 +6,12 @@
         maven 'M3' 
     }
     stages {
-       stage('Preparation') { 
+       stage('Git upload') { 
           steps {
               git 'https://github.com/RomanDelim/maven.git'
           }
        }
-       stage('Example') {
+       stage('Building') {
             steps {
               sh "mvn package"
            }
